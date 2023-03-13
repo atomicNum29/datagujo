@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-// 
+// chapter 3
 // 포인터 개념 정리
 // 
 // 포인터 표현 방식
@@ -31,6 +31,16 @@
 // 
 // 구조체와 포인터
 // 
+//
+
+//
+// Chapter 4
+// 
+// stack
+// LIFO Last In First Out
+// 
+// push 스택에 저장
+// pop  스택에서 꺼냄
 //
 
 int main() {
