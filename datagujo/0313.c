@@ -21,6 +21,16 @@
 // 
 // 
 // 동적할당
+// 정적할당과의 차이, 식당 예약 비유
+// malloc, free
+// 
+// unreferenced space problem
+// 
+// dangling pointer problem
+// 
+// 
+// 구조체와 포인터
+// 
 //
 
 int main() {
