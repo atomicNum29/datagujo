@@ -24,5 +24,8 @@
     <ClCompile Include="0314.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="0314_maze.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
