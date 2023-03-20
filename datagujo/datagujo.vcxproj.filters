@@ -30,5 +30,8 @@
     <ClCompile Include="0320.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="0320_infixtopostfix.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
