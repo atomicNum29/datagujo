@@ -72,7 +72,8 @@ void push(int _r, int _c) {
 LOC pop(void) {
 	// if error
 	if (isEmpty()) { // stack이 비었음
-		return ((LOC) { -1, -1 });
+		LOC error = { -1,-1 };
+		return error;
 	}
 	LOC result = stack[top];
 	top--;
