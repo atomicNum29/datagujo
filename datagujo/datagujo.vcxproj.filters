@@ -39,5 +39,8 @@
     <ClCompile Include="0321_2.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="0321_linkedList.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
