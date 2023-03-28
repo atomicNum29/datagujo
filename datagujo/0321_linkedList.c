@@ -181,6 +181,31 @@ int delFromLast(void) {
 	return rtn;
 }
 
+// _v를 저장한 노드를 삭제
+void delFromSLL(int _v) {
+
+	struct node* spear = findSLL(_v);
+
+	if (spear == NULL) {
+		return;
+	}
+	// 삭제 노드의 앞이 head인 경우
+	if (head == spear) {
+		head = spear->next;
+		free(spear);
+		return;
+	}
+	// 삭제 노드의 앞이 노드인 경우
+	struct node* prev = head;
+	while (prev->next != spear) {
+		prev = prev->next;
+	}
+	prev->next = spear->next;
+	free(spear);
+
+	return;
+}
+
 // SLL의 모든 노드를 삭제한다.
 void destroySLL(void) {
 	
@@ -205,6 +230,8 @@ int main() {
 
 	printf("앞에서 삭제한 노드의 data: %d\n", delFromFront());
 	printf("뒤에서 삭제한 노드의 data: %d\n", delFromLast());
+
+	delFromSLL(10);
 
 	displaySLL();
 
