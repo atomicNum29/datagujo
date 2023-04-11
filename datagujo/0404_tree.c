@@ -51,13 +51,6 @@
 //  complete binary tree
 // 
 // tree, binary tree, bnary search tree
-// 
-// 
-// traversal (방문)
-// 3가지 방법이 있는 이진트리의 순회
-// 1. pre-order traversal
-// 2. in-oder traversal
-// 3. post-order traversal
 //
 
 #include <stdio.h>
@@ -68,7 +61,12 @@ struct node {
 	struct node* left;
 	struct node* right;
 };
-struct node* root = 0;;
+struct Snode {
+	struct node* data;
+	struct Snode* next;
+};
+struct node* root = 0;
+struct Snode* head = 0;
 
 // _v 값을 가지는 노드를 만들고 BST에 추가
 void addToBST(int _v) {
@@ -106,8 +104,172 @@ void addToBST(int _v) {
 			}
 		}
 	}
-
 }
+
+void traversal_inorder(struct node* _cur) {
+
+	if (_cur == 0) {
+		return;
+	}
+
+	traversal_inorder(_cur->left);
+	printf("%d ", _cur->data);
+	traversal_inorder(_cur->right);
+	return;
+}
+
+// traversal (방문)
+// 3가지 방법이 있는 이진트리의 순회
+// 1. pre-order traversal
+// 2. in-oder traversal
+// 3. post-order traversal
+// stack 또는 재귀함수 사용.
+void push(struct node* _v) {
+	struct Snode* _new = (struct Snode*)malloc(sizeof(struct Snode));
+	_new->data = _v;
+	_new->next = 0;
+
+	if (head == 0) {
+		head = _new;
+		return;
+	}
+	_new->next = head;
+	head = _new;
+	return;
+}
+
+struct node* pop() {
+	if (head) {
+		struct node* rtn = head->data;
+		struct Snode* spear = head;
+		head = head->next;
+		free(spear);
+		return rtn;
+	}
+	return 0;
+}
+
+// 문제 있음. 수정 필
+void traversal_inorder_norecursion(struct node* _cur) {
+
+	while (1) {
+		while (_cur) {
+			push(_cur);
+			_cur = _cur->left;
+		}
+		_cur = pop();
+		if (_cur == 0) {
+			break;
+		}
+		printf("%d ", _cur->data);
+		_cur = _cur->right;
+	}
+	return;
+}
+
+void traversal_preorder(struct node* _cur) {
+
+	if (_cur == 0) {
+		return;
+	}
+
+	printf("%d ", _cur->data);
+	traversal_inorder(_cur->left);
+	traversal_inorder(_cur->right);
+	return;
+}
+
+void traversal_postorder(struct node* _cur) {
+
+	if (_cur == 0) {
+		return;
+	}
+
+	traversal_inorder(_cur->left);
+	traversal_inorder(_cur->right);
+	printf("%d ", _cur->data);
+	return;
+}
+
+// 레벨 순회
+// level order
+// queue 사용
+void enqueue(struct node* _v) {
+	struct Snode* _new = (struct Snode*)malloc(sizeof(struct Snode));
+	_new->data = _v;
+	_new->next = 0;
+	if (head) {
+		struct Snode* temp = head;
+		while (temp->next) {
+			temp = temp->next;
+		}
+		temp->next = _new;
+		return;
+	}
+	head = _new;
+	return;
+}
+
+struct node* dequeue() {
+	if (head == 0) {
+		return 0;
+	}
+	struct node* rtn = head->data;
+	struct Snode* spear = head;
+	head = head->next;
+	free(spear);
+	return rtn;
+}
+
+void level_order(struct node* _cur) {
+	enqueue(_cur);
+	while (head) {
+		_cur = dequeue();
+		printf("%d ", _cur->data);
+		if (_cur->left) {
+			enqueue(_cur->left);
+		}
+		if (_cur->right) {
+			enqueue(_cur->right);
+		}
+	}
+	return;
+}
+
+// 높이 구하기
+int which_is_bigger(int a, int b) {
+	return a < b ? b : a;
+}
+
+int get_height(struct node* _cur) {
+
+	if (_cur == 0) {
+		return 0;
+	}
+
+	return (1 + which_is_bigger(get_height(_cur->left), get_height(_cur->right)));
+}
+
+// 노드 개수 구하기
+int get_node_count(struct node* _cur) {
+	if (_cur == 0) {
+		return 0;
+	}
+	return (1 + get_node_count(_cur->left) + get_node_count(_cur->right));
+}
+
+// 단말노드 개수 구하기
+int get_terminalnode_count(struct node* _cur) {
+	if (_cur == 0) {
+		return 0;
+	}
+	if (_cur->left == 0 && _cur->right->right == 0) {
+		return 1;
+	}
+	return (get_terminalnode_count(_cur->left) + get_terminalnode_count(_cur->right));
+}
+
+// 트리의 응용: 수식 처리 트리
 
 int main() {
 
@@ -115,12 +277,23 @@ int main() {
 	addToBST(10);
 	addToBST(30);
 	addToBST(40);
-	addToBST(15);
+	addToBST(5);
 	// skewed: 순서대로 추가하면 트리가 선형적으로 만들어짐
-	printf("%d\n", (root->data == 20));
-	printf("%d\n", (root->left->data == 10));
-	printf("%d\n", (root->right->data == 30));
-	printf("%d\n", (root->left->right->data == 15));
+	//printf("%d\n", (root->data == 20));
+	//printf("%d\n", (root->left->data == 10));
+	//printf("%d\n", (root->right->data == 30));
+	//printf("%d\n", (root->left->right->data == 15));
+	struct node* spear = root;
+	traversal_inorder(spear);
+	printf("\n");
+	traversal_inorder_norecursion(spear);
+	printf("\n");
+	traversal_preorder(spear);
+	printf("\n");
+	traversal_postorder(spear);
+	printf("\n");
+	level_order(spear);
+	printf("\n");
 
 	return 0;
 }
