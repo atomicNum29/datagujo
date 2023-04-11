@@ -270,6 +270,105 @@ int get_terminalnode_count(struct node* _cur) {
 
 // 트리의 응용: 수식 처리 트리
 
+// 한 노드와 그 부모 노드를 모두 찾아내고 돌려주는 함수를 만들자
+// 함수가 두 값(목표와 목표의 부모)을 한 번에 돌려주도록 구조체를 만들자
+struct combo {
+	struct node* parent;
+	struct node* me;
+};
+// me: _v 소유 노드
+// parent: me의 부모
+struct combo findNodeCombo(int _v) {
+
+	struct node* spear = root;
+	struct node* parent = 0;
+
+	while (spear) {
+		if (spear->data == _v) {
+			struct combo rtn = { parent, spear };
+			return rtn;
+		}
+		else if (spear->data < _v) {
+			parent = spear;
+			spear = spear->right;
+		}
+		else {
+			parent = spear;
+			spear = spear->left;
+		}
+	}
+	struct combo rtn = { 0, 0 };
+	return rtn;
+}
+
+// _v 소유 노드를 삭제
+void delFromBST(int _v) {
+	struct combo res = findNodeCombo(_v);
+
+	if (res.me == 0) { // 해당 노드가 없음.
+		return;
+	}
+
+	if (res.me->left == 0 && res.me->right == 0) { // 무자식
+		if (res.parent == 0) {
+			root = 0;
+			free(res.me);
+			return;
+		}
+		if (res.parent->left == res.me) {
+			res.parent->left = 0;
+		}
+		else {
+			res.parent->right = 0;
+		}
+		free(res.me);
+		return;
+	}
+
+	if (res.me->left != 0 && res.me->right != 0) { // 쌍자식
+		struct node* spear = res.me->right;
+		while (spear->left) {
+			spear = spear->left;
+		}
+		int temp = spear->data;
+		delFromBST(temp);
+		res.me->data = temp;
+		return;
+	}
+	else { // 홑자식
+		if (res.me->left != 0) { // 왼쪽 자식이 있는
+			if (res.parent == 0) {
+				root = res.me->left;
+				free(res.me);
+				return;
+			}
+			if (res.parent->left) {
+				res.parent->left = res.me->left;
+			}
+			else {
+				res.parent->right = res.me->left;
+			}
+			free(res.me);
+			return;
+		}
+		else { // 오른쪽 자식이 있는
+			if (res.parent == 0) {
+				root = res.me->right;
+				free(res.me);
+				return;
+			}
+			if (res.parent->left) {
+				res.parent->left = res.me->right;
+			}
+			else {
+				res.parent->right = res.me->right;
+			}
+			free(res.me);
+			return;
+		}
+	}
+}
+
 int main() {
 
 	addToBST(20);
