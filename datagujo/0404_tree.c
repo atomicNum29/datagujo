@@ -149,7 +149,6 @@ struct node* pop() {
 	return 0;
 }
 
-// 문제 있음. 수정 필
 void traversal_inorder_norecursion(struct node* _cur) {
 
 	while (1) {
