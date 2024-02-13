@@ -54,5 +54,26 @@
     <ClCompile Include="0501_graph.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="0508_MST.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="0509_Dijkstra.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="0515_Topological_sort.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="0515_floyd.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="0516_dijkstra_2Dmap.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="0516_dijkstra_practice.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="0523_sort.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
